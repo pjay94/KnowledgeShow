@@ -1,6 +1,6 @@
 package it.pjay.knowledgeshow
 
-class QuestionEntry(id: Int, category: String, question: String, answer: String, fact: String) {
+class QuestionEntry(val id: Int, val category: String, val question: String, val answer: String, val fact: String) {
 //    var category: String = ""
 //    var question: String = ""
 //    var answer: String = ""

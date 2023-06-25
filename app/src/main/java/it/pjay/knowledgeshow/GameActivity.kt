@@ -13,6 +13,7 @@ class GameActivity : AppCompatActivity() {
     var context: Context = this
     var mpCorrect: MediaPlayer? = null
     var mpWrong: MediaPlayer? = null
+    val dbHelper: DatabaseHelper = DatabaseHelper(context)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,13 @@ class GameActivity : AppCompatActivity() {
         val answerText = findViewById<TextView>(R.id.answer)
         val categoryText = findViewById<TextView>(R.id.category)
         val questionText = findViewById<TextView>(R.id.question)
+
+        var questionEntry: QuestionEntry? = dbHelper.getRandomEntry()
+        if (questionEntry != null) {
+            questionText.setText(questionEntry.question)
+            categoryText.setText(questionEntry.category)
+            answerText.setText(questionEntry.answer)
+        }
 
         mpCorrect = MediaPlayer.create(context, R.raw.correctanswer);
         mpWrong = MediaPlayer.create(context, R.raw.wronganswer);
@@ -44,8 +52,15 @@ class GameActivity : AppCompatActivity() {
             greenButton.visibility = View.INVISIBLE
             redButton.visibility = View.INVISIBLE
             answerText.visibility = View.INVISIBLE
-            categoryText.text = (Math.random() * 100).toString()
-            questionText.text = (Math.random() * 100).toString()
+//            categoryText.text = (Math.random() * 100).toString()
+//            questionText.text = (Math.random() * 100).toString()
+            questionEntry= dbHelper.getRandomEntry()
+
+            if (questionEntry != null) {
+                questionText.setText(questionEntry!!.question)
+                categoryText.setText(questionEntry!!.category)
+                answerText.setText(questionEntry!!.answer)
+            }
         }
 
         greenButton.setOnClickListener(View.OnClickListener {
